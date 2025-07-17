@@ -1,0 +1,88 @@
+﻿@model IEnumerable<FlightSchedule.Models.AirlineViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-controller="Airline" asp-action="CreateAirline">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NameEN)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NameAR)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IATA)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ICAO)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AirlineEmail)
+            </th>
+            <th>Display Name</th>
+            <th>Logo</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NameEN)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NameAR)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IATA)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ICAO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AirlineEmail)
+            </td>
+            <td>
+                @item.DisplayName
+            </td>
+             <td>
+                    <img src='/images/@item.Images' height="40" width="40" id="image" asp-append-version="true">
+             </td>
+            <td>
+                @Html.ActionLink("Edit", "Update", new { id=item.Id }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                <button class="btn btn-danger" onclick="Delete('@item.Id')">Delete</button>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+
+@section Scripts {
+   <script>
+    
+       function Delete(Id){
+         if (confirm("Are sure wants to delete?") == true) {
+           window.location.href = '/Airline/Delete/'+Id;
+           } else {
+           window.location.href = '/Airline/Index';
+           }
+
+     }
+   </script>
+}
