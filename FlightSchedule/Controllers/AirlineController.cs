@@ -106,34 +106,79 @@ namespace FlightSchedule.Controllers
 
 
         [HttpGet]
-        public IActionResult Index() //  Get  All Records 
-        { 
+        public IActionResult Index(string? airlineName) //  Get  All Records 
+        {
+
+            //  Spigate Code 
+
+            //List<AirlineViewModel> allAirlinesViewModel =new List<AirlineViewModel>();
+
+            //var dataFromDB = _applicationDbContext.Airlines.OrderByDescending(a => a).ToList(); 
+            //foreach (var item in dataFromDB)
+            //{
+
+            //    allAirlinesViewModel.Add(new AirlineViewModel
+            //    {
+            //        AirlineEmail = item.AirlineEmail,
+            //        IATA = item.IATA,
+            //        ICAO = item.ICAO,
+            //        Id = item.Id,
+            //        NameAR = item.NameAR,
+            //        NameEN = item.NameEN,
+            //        Images = item.Images,
+            //        DisplayName = $"{item.IATA} _ {item.NameEN}"
+            //    });
+            //}
 
 
 
-            List<AirlineViewModel> allAirlinesViewModel =new List<AirlineViewModel>();
 
-            var dataFromDB = _applicationDbContext.Airlines.OrderByDescending(a => a).ToList(); 
-            foreach (var item in dataFromDB)
+            //  clean  Code
+
+            List  <AirlineViewModel> allData=new List<AirlineViewModel>();
+            if (string.IsNullOrEmpty(airlineName))
+            {
+                allData = _applicationDbContext.Airlines.OrderByDescending(a => a).Select(x => new AirlineViewModel
+                {
+                    AirlineEmail = x.AirlineEmail,
+                    IATA = x.IATA,
+                    ICAO = x.ICAO,
+                    Id = x.Id,
+                    NameAR = x.NameAR,
+                    NameEN = x.NameEN,
+                    Images = x.Images,
+                    DisplayName = $"{x.IATA} _ {x.NameEN}"
+                }).ToList();
+
+            }
+            else
             {
 
-                allAirlinesViewModel.Add(new AirlineViewModel
+                airlineName = airlineName.Trim();   
+
+                allData = _applicationDbContext.Airlines.Where(x=>x.NameEN.ToLower().Contains(airlineName) ).OrderByDescending(a => a).Select(x => new AirlineViewModel
                 {
-                    AirlineEmail = item.AirlineEmail,
-                    IATA = item.IATA,
-                    ICAO = item.ICAO,
-                    Id = item.Id,
-                    NameAR = item.NameAR,
-                    NameEN = item.NameEN,
-                    Images = item.Images,
-                    DisplayName = $"{item.IATA} _ {item.NameEN}"
-                });
+                    AirlineEmail = x.AirlineEmail,
+                    IATA = x.IATA,
+                    ICAO = x.ICAO,
+                    Id = x.Id,
+                    NameAR = x.NameAR,
+                    NameEN = x.NameEN,
+                    Images = x.Images,
+                    DisplayName = $"{x.IATA} _ {x.NameEN}"
+                }).ToList();
+
+
+
+
             }
 
 
-
-            return  View(allAirlinesViewModel);    
+            return View(allData);    
         }
+
+
+
 
         [HttpGet]
         public IActionResult Update(int id)

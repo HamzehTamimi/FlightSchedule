@@ -9,6 +9,9 @@
 <p>
     <a asp-controller="Airline" asp-action="CreateAirline">Create New</a>
 </p>
+
+
+<input type="text" name="searchBox" id="searchBox_id" onblur="searchFunction()" />
 <table class="table">
     <thead>
         <tr>
@@ -84,5 +87,15 @@
            }
 
      }
+
+        function searchFunction() {
+         var searchValue = document.getElementById("searchBox_id").value;
+            if (searchValue) {
+                   window.location.href = '/Airline/Index?airlineName=' + encodeURIComponent(searchValue);
+         }
+         else {
+                      window.location.href = '/Airline/Index?airlineName=';
+            }
+        }   
    </script>
 }
