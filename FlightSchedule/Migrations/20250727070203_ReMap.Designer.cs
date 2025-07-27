@@ -11,9 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FlightSchedule.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext.ApplicationDbContext))]
-    [Migration("20250716093612_photoDB")]
-    partial class photoDB
+    [Migration("20250727070203_ReMap")]
+    partial class ReMap
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -61,6 +60,65 @@ namespace FlightSchedule.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Airlines");
+                });
+
+            modelBuilder.Entity("FlightSchedule.Enities.Flight", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("ActualTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("AirlineId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ArrivalAirport")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DepartureAirport")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FlightNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FlightType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ScheduledTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AirlineId");
+
+                    b.ToTable("Flights");
+                });
+
+            modelBuilder.Entity("FlightSchedule.Enities.Flight", b =>
+                {
+                    b.HasOne("FlightSchedule.Enities.Airline", "Airline")
+                        .WithMany("Flight")
+                        .HasForeignKey("AirlineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Airline");
+                });
+
+            modelBuilder.Entity("FlightSchedule.Enities.Airline", b =>
+                {
+                    b.Navigation("Flight");
                 });
 #pragma warning restore 612, 618
         }

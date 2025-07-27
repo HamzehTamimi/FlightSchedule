@@ -5,24 +5,18 @@
 namespace FlightSchedule.Migrations
 {
     /// <inheritdoc />
-    public partial class photoDB : Migration
+    public partial class AddId : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "Images",
-                table: "Airlines",
-                type: "nvarchar(max)",
-                nullable: true);
+
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "Images",
-                table: "Airlines");
+
         }
     }
 }

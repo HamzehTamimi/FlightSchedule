@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.Extensions.Hosting;
+using System.ComponentModel.DataAnnotations;
 
 namespace FlightSchedule.Enities
 {
@@ -27,5 +28,8 @@ namespace FlightSchedule.Enities
         public string? Images { get; set; }
 
         public DateTime? CreatedOn { get; set; } = DateTime.Now;
+
+        public ICollection<Flight> Flight { get; }
+
     }
 }
