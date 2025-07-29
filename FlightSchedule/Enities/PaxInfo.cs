@@ -13,7 +13,7 @@ namespace FlightSchedule.Enities
         public int Infant { get; set; }
         public int FlightId { get; set; }
 
-        [ForeignKey("AirlineId")]
+        [ForeignKey("FlightId")]
         public Flight Flight { get; set; }
     }
 }

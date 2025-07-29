@@ -82,7 +82,6 @@ namespace FlightSchedule.Controllers
 
             return Json(string.Empty);  
         }
-        public static List<FlightAndPaxViewModel> Flights = new List<FlightAndPaxViewModel>();
         [HttpGet]
         public IActionResult Create()
         {
@@ -127,13 +126,16 @@ namespace FlightSchedule.Controllers
                 flightObject.ActualTime = flight.ActualTime;
                 flightObject.FlightType =  flight.FlightType;
                 flightObject.AirlineId = flight.AirlineId;
+                _context.Flights.Add(flightObject);
+                _context.SaveChanges();
 
                 FlightSchedule.Enities.PaxInfo paxObject = new Enities.PaxInfo();
                 paxObject.Infant = flight.Infant;
                 paxObject.Child  = flight.Child;
                 paxObject.Adult = flight.Adult;
+                paxObject.FlightId = flightObject.Id; 
 
-                _context.Flights.Add(flightObject);
+               
                 _context.PaxInfo.Add(paxObject);
                 _context.SaveChanges();
 

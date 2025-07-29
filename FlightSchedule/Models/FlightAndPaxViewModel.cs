@@ -11,7 +11,7 @@ namespace FlightSchedule.Models
         [Required]
         public int Status { get; set; }
         [Required]
-        [FLightNumberVildationAttribute]
+        //[FLightNumberVildationAttribute]
         public string FlightNumber { get; set; }
         [Required]
         public string ArrivalAirport { get; set; }
@@ -25,6 +25,8 @@ namespace FlightSchedule.Models
         public int FlightType { get; set; }
 
         public int AirlineId { get; set; }
+
+        public int FlightId { get; set; }
         [Required]
 
         public int Adult { get; set; }

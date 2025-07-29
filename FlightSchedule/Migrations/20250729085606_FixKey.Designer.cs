@@ -4,6 +4,7 @@ using FlightSchedule.ApplicationDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FlightSchedule.Migrations
 {
     [DbContext(typeof(ApplicationDbContext.ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250729085606_FixKey")]
+    partial class FixKey
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -143,7 +146,7 @@ namespace FlightSchedule.Migrations
             modelBuilder.Entity("FlightSchedule.Enities.PaxInfo", b =>
                 {
                     b.HasOne("FlightSchedule.Enities.Flight", "Flight")
-                        .WithMany("PaxInfo")
+                        .WithMany()
                         .HasForeignKey("FlightId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -154,11 +157,6 @@ namespace FlightSchedule.Migrations
             modelBuilder.Entity("FlightSchedule.Enities.Airline", b =>
                 {
                     b.Navigation("Flight");
-                });
-
-            modelBuilder.Entity("FlightSchedule.Enities.Flight", b =>
-                {
-                    b.Navigation("PaxInfo");
                 });
 #pragma warning restore 612, 618
         }

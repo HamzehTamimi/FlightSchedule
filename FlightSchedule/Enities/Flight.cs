@@ -30,5 +30,7 @@ namespace FlightSchedule.Enities
         [ForeignKey("AirlineId")]
 
         public Airline Airline { get; set; }
+
+        public ICollection<PaxInfo> PaxInfo { get; }
     }
 }
