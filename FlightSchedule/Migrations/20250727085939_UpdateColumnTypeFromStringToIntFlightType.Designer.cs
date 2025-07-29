@@ -4,6 +4,7 @@ using FlightSchedule.ApplicationDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FlightSchedule.Migrations
 {
     [DbContext(typeof(ApplicationDbContext.ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250727085939_UpdateColumnTypeFromStringToIntFlightType")]
+    partial class UpdateColumnTypeFromStringToIntFlightType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -102,36 +105,6 @@ namespace FlightSchedule.Migrations
                     b.ToTable("Flights");
                 });
 
-            modelBuilder.Entity("FlightSchedule.Enities.PaxInfo", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Adult")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("AirlineId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Child")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FlightId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Infant")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AirlineId");
-
-                    b.ToTable("PaxInfo");
-                });
-
             modelBuilder.Entity("FlightSchedule.Enities.Flight", b =>
                 {
                     b.HasOne("FlightSchedule.Enities.Airline", "Airline")
@@ -141,15 +114,6 @@ namespace FlightSchedule.Migrations
                         .IsRequired();
 
                     b.Navigation("Airline");
-                });
-
-            modelBuilder.Entity("FlightSchedule.Enities.PaxInfo", b =>
-                {
-                    b.HasOne("FlightSchedule.Enities.Flight", "Flight")
-                        .WithMany()
-                        .HasForeignKey("AirlineId");
-
-                    b.Navigation("Flight");
                 });
 
             modelBuilder.Entity("FlightSchedule.Enities.Airline", b =>

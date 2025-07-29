@@ -1,13 +1,12 @@
-﻿using FlightSchedule.VildationHelper;
+﻿using FlightSchedule.Enities;
+using FlightSchedule.VildationHelper;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Reflection.Metadata;
 
-namespace FlightSchedule.Enities
+namespace FlightSchedule.Models
 {
-    public class Flight
+    public class FlightAndPaxViewModel
     {
-        [Key]
         public int Id { get; set; }
         [Required]
         public int Status { get; set; }
@@ -26,9 +25,14 @@ namespace FlightSchedule.Enities
         public int FlightType { get; set; }
 
         public int AirlineId { get; set; }
+        [Required]
 
-        [ForeignKey("AirlineId")]
+        public int Adult { get; set; }
+        [Required]
 
-        public Airline Airline { get; set; }
+        public int Child { get; set; }
+        [Required]
+
+        public int Infant { get; set; }
     }
 }

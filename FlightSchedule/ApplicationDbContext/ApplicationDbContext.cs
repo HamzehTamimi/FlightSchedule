@@ -15,5 +15,7 @@ namespace FlightSchedule.ApplicationDbContext
 
         public DbSet<Entity.Airline> Airlines { get; set; }
         public DbSet<Entity.Flight> Flights { get; set; }
+
+        public DbSet<Entity.PaxInfo> PaxInfo { get; set; }
     }
 }

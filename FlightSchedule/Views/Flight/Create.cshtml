@@ -1,4 +1,4 @@
-﻿@model FlightSchedule.Enities.Flight
+﻿@model FlightSchedule.Models.FlightAndPaxViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -13,13 +13,17 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
+                <label>Airline</label>
+                <select id="selection" onchange="selectionChange();" asp-for="AirlineId" class="form-control" asp-items="@(new SelectList(ViewBag.AirlineList, "Value", "Text"))">
+                </select>
+            </div>
+            <div class="form-group">
                 <label asp-for="Status" class="control-label"></label>
-                <input asp-for="Status" class="form-control" />
-                <span asp-validation-for="Status" class="text-danger"></span>
+                @Html.DropDownList("Status", (IEnumerable<SelectListItem>)ViewBag.FlightStatus, "Select a Status", new { @class = "form-control" })
             </div>
             <div class="form-group">
                 <label asp-for="FlightNumber" class="control-label"></label>
-                <input asp-for="FlightNumber" class="form-control" />
+                <input asp-for="FlightNumber" onchange="checkFlightNumber()" id="txt" class="form-control" />
                 <span asp-validation-for="FlightNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -47,10 +51,19 @@
                 @Html.DropDownList("FlightType", (IEnumerable<SelectListItem>)ViewBag.flightTypes, "Select a Category", new { @class = "form-control" })
             </div>
             <div class="form-group">
-                <label>Airline</label>
-                <select asp-for="AirlineId" class="form-control" asp-items="@(new SelectList(ViewBag.AirlineList, "Value", "Text"))">
-
-                </select>
+                <label asp-for="Adult" class="control-label"></label>
+                <input asp-for="Adult" class="form-control" />
+                <span asp-validation-for="Adult" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Child" class="control-label"></label>
+                <input asp-for="Child" class="form-control" />
+                <span asp-validation-for="Child" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Infant" class="control-label"></label>
+                <input asp-for="Infant" class="form-control" />
+                <span asp-validation-for="Infant" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -65,4 +78,32 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        async function selectionChange()
+        {
+                  
+
+          //  var e = document.getElementById("selection");
+         //   var str = e.options[e.selectedIndex];
+            var e = document.getElementById("selection");
+            var id = e.value;
+            const response = await fetch(`/Flight/GetIata/${id}`);
+            const json = await response.json();
+            var x=   document.getElementById('txt').value = json;
+        }
+
+        async function checkFlightNumber() {
+            var id = document.getElementById("selection").value;
+            const response = await fetch(`/Flight/GetIata/${id}`);
+            const json = await response.json();
+            var x = document.getElementById('txt').value;
+            if (x.includes(json)) {
+              alert("Flight Number is Vaild"); // Output: x contains y
+            } else {
+              alert("Flight Number is NOT Vaild");
+            }
+        }
+    </script>
 }
+

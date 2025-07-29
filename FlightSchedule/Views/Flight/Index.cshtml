@@ -67,11 +67,26 @@
                 @Html.DisplayFor(modelItem => item.AirlineId)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Update" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <button class="btn btn-danger" onclick="Delete('@item.Id')">Delete</button>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+                
+@section Scripts {
+    <script>
+
+          function Delete(Id){
+            if (confirm("Are sure wants to delete?") == true) {
+              window.location.href = '/Flight/Delete/'+Id;
+              } else {
+              window.location.href = '/Flight/Index';
+              }
+
+        }
+    </script>
+}
