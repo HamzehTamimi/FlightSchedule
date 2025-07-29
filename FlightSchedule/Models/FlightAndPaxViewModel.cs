@@ -36,5 +36,7 @@ namespace FlightSchedule.Models
         [Required]
 
         public int Infant { get; set; }
+
+        public string NameEN { get; set; }
     }
 }

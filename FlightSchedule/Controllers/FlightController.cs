@@ -21,8 +21,25 @@ namespace FlightSchedule.Controllers
 
         public IActionResult Index()
         {
-            var listofData = _context.Flights.ToList();
-            return View(listofData);
+          //  List<FlightAndPaxViewModel> listofData = new List<FlightAndPaxViewModel>();
+
+
+
+            var listofData = from a in _context.Airlines
+                           join f in _context.Flights on a.Id equals f.AirlineId
+                           select new FlightAndPaxViewModel
+                           {
+                               NameEN = a.NameEN,
+                               Status = f.Status,
+                               FlightNumber = f.FlightNumber,
+                               ArrivalAirport = f.ArrivalAirport,
+                               DepartureAirport = f.DepartureAirport,
+                               ScheduledTime = f.ScheduledTime,
+                               ActualTime = f.ActualTime,
+                               FlightType = f.FlightType,
+                            //   AirlineId = f.AirlineId,
+                           };
+            return View(listofData.ToList());
         }
         public List<SelectListItem> FillFlightType()
         {
@@ -115,8 +132,8 @@ namespace FlightSchedule.Controllers
         public IActionResult Create(FlightAndPaxViewModel flight) {
 
 
-            if (ModelState.IsValid)
-            {
+          if (ModelState.IsValid)
+          {
                 FlightSchedule.Enities.Flight flightObject = new Enities.Flight();
                 flightObject.Status = flight.Status;
                 flightObject.FlightNumber = flight.FlightNumber;
@@ -126,6 +143,7 @@ namespace FlightSchedule.Controllers
                 flightObject.ActualTime = flight.ActualTime;
                 flightObject.FlightType =  flight.FlightType;
                 flightObject.AirlineId = flight.AirlineId;
+
                 _context.Flights.Add(flightObject);
                 _context.SaveChanges();
 
@@ -176,21 +194,7 @@ namespace FlightSchedule.Controllers
         {
             var data = _context.Flights.Where(x => x.Id == id).FirstOrDefault();
 
-            var flightTypes = new List<SelectListItem>
-            {
-                new SelectListItem { Text = "Economy", Value = "Economy" },
-                new SelectListItem { Text = "Premium Economy", Value = "Premium Economy" },
-                new SelectListItem { Text = "Business", Value = "Business" },
-                new SelectListItem { Text = "First Class", Value = "First Class" },
-                new SelectListItem { Text = "Commercial", Value = "Commercial" },
-                new SelectListItem { Text = "Private", Value = "Private" },
-                new SelectListItem { Text = "Cargo", Value = "Cargo" },
-                new SelectListItem { Text = "Connecting", Value = "Connecting" },
-                new SelectListItem { Text = "Direct", Value = "Direct" },
-                new SelectListItem { Text = "Non-Stop", Value = "Non-Stop" },
-            };
-
-            ViewBag.flightTypes = flightTypes;
+            ViewBag.flightTypes = FillFlightType();
             return View(data);
         }
 
@@ -198,20 +202,6 @@ namespace FlightSchedule.Controllers
         public IActionResult Update(Flight flight)
         {
             var data = _context.Flights.Where(x => x.Id == flight.Id).FirstOrDefault();
-
-            var flightTypes = new List<SelectListItem>
-            {
-                new SelectListItem { Text = "Economy", Value = "Economy" },
-                new SelectListItem { Text = "Premium Economy", Value = "Premium Economy" },
-                new SelectListItem { Text = "Business", Value = "Business" },
-                new SelectListItem { Text = "First Class", Value = "First Class" },
-                new SelectListItem { Text = "Commercial", Value = "Commercial" },
-                new SelectListItem { Text = "Private", Value = "Private" },
-                new SelectListItem { Text = "Cargo", Value = "Cargo" },
-                new SelectListItem { Text = "Connecting", Value = "Connecting" },
-                new SelectListItem { Text = "Direct", Value = "Direct" },
-                new SelectListItem { Text = "Non-Stop", Value = "Non-Stop" },
-            };
 
             if (data != null)
             {
@@ -225,7 +215,7 @@ namespace FlightSchedule.Controllers
             }
 
               
-            ViewBag.flightTypes = flightTypes;
+            ViewBag.flightTypes = FillFlightType();
             _context.SaveChanges();
             return View(data);
         }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FlightSchedule.Enities.Flight>
+﻿@model IEnumerable<FlightSchedule.Models.FlightAndPaxViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -34,7 +34,7 @@
                 @Html.DisplayNameFor(model => model.FlightType)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Airline)
+                @Html.DisplayNameFor(model => model.NameEN)
             </th>
             <th></th>
         </tr>
@@ -64,11 +64,10 @@
                 @Html.DisplayFor(modelItem => item.FlightType)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AirlineId)
+                    @Html.DisplayFor(modelItem => item.NameEN)
             </td>
             <td>
                 <a asp-action="Update" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <button class="btn btn-danger" onclick="Delete('@item.Id')">Delete</button>
             </td>
         </tr>
