@@ -12,7 +12,7 @@ namespace FlightSchedule.Enities
         [Required]
         public int Status { get; set; }
         [Required]
-        [FLightNumberVildationAttribute]
+        [FlightNumberValidationAttribute]
         public string FlightNumber { get; set; }
         [Required]
         public string ArrivalAirport { get; set; }

@@ -2,7 +2,7 @@
 
 namespace FlightSchedule.VildationHelper
 {
-    public class FLightNumberVildationAttribute:ValidationAttribute
+    public class FlightNumberValidationAttribute:ValidationAttribute
     {
         //private readonly ApplicationDbContext.ApplicationDbContext _applicationDbContext;
 
