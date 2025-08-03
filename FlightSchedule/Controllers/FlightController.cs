@@ -29,6 +29,7 @@ namespace FlightSchedule.Controllers
                            join f in _context.Flights on a.Id equals f.AirlineId
                            select new FlightAndPaxViewModel
                            {
+                               Id = f.Id,
                                NameEN = a.NameEN,
                                Status = f.Status,
                                FlightNumber = f.FlightNumber,
