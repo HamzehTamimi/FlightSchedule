@@ -25,6 +25,16 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        <li class="nav-item">
+                            <form asp-controller="Auth" asp-action="SignOut" method="post">
+                                <button type="submit" class="nav-link btn-link btn">Sign Out</button>
+                            </form>
+                        </li>
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item">
+                                <span class="navbar-text fs-4">Welcome, @User.Identity.Name!</span>
+                            </li>
+                        </ul>
                     </ul>
                 </div>
             </div>

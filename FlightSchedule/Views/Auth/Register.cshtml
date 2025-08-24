@@ -1,0 +1,164 @@
+﻿@model FlightSchedule.Models.RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Poppins, sans-serif;
+            background: #eee;
+        }
+
+        .form-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #fff;
+            padding: 20px;
+            width: 800px;
+            height: 500px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .img-area {
+            flex: 1;
+            padding: 20px;
+            text-align: center;
+        }
+
+            .img-area img {
+                max-width: 100%;
+                height: auto;
+            }
+
+        .form-area {
+            flex: 1;
+            padding: 20px;
+            background-color: #fff;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+            .form-area h3 {
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+
+        .single-form {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        input[type="text"], input[type="password"], .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="submit"], .btn-primary {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .text-danger {
+            font-size: 14px;
+            color: red;
+        }
+        @@media (max-width: 768px) {
+            .wrapper
+
+        {
+            flex-direction: column;
+            text-align: center;
+            height: auto;
+            width: auto;
+        }
+
+        .img-area, .form-area {
+            flex: none;
+        }
+
+        .img-area {
+            margin-bottom: 20px;
+        }
+
+        }
+    </style>
+</head>
+<body>
+    <div class="form-box">
+        <div class="wrapper">
+            <div class="img-area">
+                <img src="/img/logo.png" alt="Login Illustration" />
+            </div>
+            <div class="form-area">
+                <h3>Login Form</h3>
+
+                <form asp-action="Register" method="post">
+                    <div class="single-form">
+                        <label asp-for="UserName"></label>
+                        <input asp-for="UserName" class="form-control" />
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+
+                    <div class="single-form">
+                        <label asp-for="Email"></label>
+                        <input asp-for="Email" class="form-control"  />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="single-form">
+                        <label asp-for="Password"></label>
+                        <input asp-for="Password" class="form-control"  />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="single-form">
+                        <label asp-for="ConfirmPassword"></label>
+                        <input asp-for="ConfirmPassword" class="form-control"  />
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }
+</body>
+</html>

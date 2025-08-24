@@ -1,4 +1,5 @@
 using FlightSchedule.ApplicationDbContext;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Configuration;
@@ -10,10 +11,15 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(Options => Options.UseSqlServer(  builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
+builder.Services.AddIdentity<IdentityUser,IdentityRole>(options =>
+    options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Auth/Login"; // redirect here if unauthenticated
+});
 
 
-
-     
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

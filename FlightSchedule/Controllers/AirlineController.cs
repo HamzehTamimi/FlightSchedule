@@ -1,5 +1,6 @@
 ﻿using FlightSchedule.Enities;
 using FlightSchedule.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing.Constraints;
@@ -8,6 +9,8 @@ using Microsoft.Extensions.Hosting;
 
 namespace FlightSchedule.Controllers
 {
+    [Authorize]
+
     public class AirlineController : Controller
     {
 
@@ -22,6 +25,7 @@ namespace FlightSchedule.Controllers
 
         public static List<AirlineViewModel> Airlines = new List<AirlineViewModel>();
         [HttpGet]
+        
         public IActionResult CreateAirline()
         {
             return View();
@@ -171,6 +175,15 @@ namespace FlightSchedule.Controllers
 
 
 
+            }
+
+            if (User.Identity.IsAuthenticated)
+            {
+                ViewBag.UserName = User.Identity.Name;
+            }
+            else
+            {
+                ViewBag.UserName = "Guest";
             }
 
 
